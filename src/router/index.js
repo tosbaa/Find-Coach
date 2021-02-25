@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import CoachDetails from "../views/coaches/CoachDetails.vue";
 import CoachList from "../views/coaches/CoachList.vue";
 import CoachRegister from "../views/coaches/CoachRegister.vue";
-import ContactCoach from "../views/registers/ContactCoach.vue";
-import RequestReceived from "../views/coaches/RequestReceived.vue";
+import ContactCoach from "../views/requests/ContactCoach.vue";
+import RequestReceived from "../views/requests/RequestsReceived.vue";
 import NotFound from "../views/NotFound.vue";
 const routes = [
   {
