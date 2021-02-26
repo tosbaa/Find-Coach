@@ -12,17 +12,15 @@ const routes = [
   },
   {
     path: "/coaches",
-    component: CoachList,
+    component: CoachList
+  },
+  {
+    path: "/coaches/:id",
+    component: CoachDetails,
     children: [
       {
-        path: ":id",
-        component: CoachDetails,
-        children: [
-          {
-            path: "contact",
-            component: ContactCoach
-          }
-        ]
+        path: "contact",
+        component: ContactCoach
       }
     ]
   },
