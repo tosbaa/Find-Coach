@@ -2,7 +2,7 @@
   <base-card>
     <h2>Find Your Coach</h2>
     <span class="filter-option">
-      <input type="checkbox" name="filter" value="frontend" v-model="filters"/>
+      <input type="checkbox" name="filter" value="frontend" v-model="filters" />
       <label for="frontend"> Frontend </label>
     </span>
     <span class="filter-option">
@@ -20,7 +20,7 @@
 export default {
   data() {
     return {
-      filters: ["frontend", "backend", "career"],
+      filters: ["frontend", "backend", "career"]
     };
   },
 
