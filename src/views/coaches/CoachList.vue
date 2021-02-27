@@ -1,6 +1,6 @@
 <template>
   <section>
-    FILTER
+    <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
 
   <section>
@@ -28,13 +28,43 @@
 <script>
 import { mapGetters } from "vuex";
 import CoachItem from "../../components/coach/CoachItem.vue";
+import CoachFilter from "../../components/coach/CoachFilter.vue";
 export default {
-  components: { CoachItem },
+  components: { CoachItem, CoachFilter },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        career: true
+      }
+    };
+  },
   computed: {
     ...mapGetters({
-      filteredCoaches: "coaches/coaches",
       coachesExist: "coaches/hasCoaches"
-    })
+    }),
+    filteredCoaches() {
+      const coaches = this.$store.getters["coaches/coaches"];
+      return coaches.filter(coach => {
+        if (this.activeFilters.frontend && coach.areas.includes("frontend")) {
+          return true;
+        }
+        if (this.activeFilters.backend && coach.areas.includes("backend")) {
+          return true;
+        }
+        if (this.activeFilters.career && coach.areas.includes("career")) {
+          return true;
+        }
+        return false;
+      });
+    }
+  },
+
+  methods: {
+    setFilters(filters) {
+      this.activeFilters = filters;
+    }
   }
 };
 </script>
