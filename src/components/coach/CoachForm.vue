@@ -49,14 +49,14 @@ export default {
 
   methods: {
     submitForm() {
-      const data = {
+      const formData = {
         first: this.firstName,
         last: this.lastName,
         description: this.description,
         rate: this.rate,
         areas: this.areas
       };
-      console.log(data);
+      this.$emit("save-data", formData);
     }
   }
 };

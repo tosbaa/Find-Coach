@@ -33,7 +33,7 @@ export default {
   components: { CoachItem, CoachFilter },
   data() {
     return {
-      filters: []
+      filters: ["frontend", "backend", "career"]
     };
   },
   computed: {

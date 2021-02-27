@@ -55,6 +55,7 @@ export default {
 
   created() {
     this.selectedCoach = this.$store.getters["coaches/getCoachByID"](this.id);
+    console.log(this.selectedCoach);
   }
 };
 </script>
