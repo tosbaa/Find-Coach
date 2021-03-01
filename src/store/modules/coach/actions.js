@@ -1,7 +1,7 @@
 export default {
-  saveCoach({ commit }, payload) {
+  saveCoach({ commit, rootGetters }, payload) {
     const data = {
-      id: new Date().toISOString(),
+      id: rootGetters.userId,
       firstName: payload.first,
       lastName: payload.last,
       description: payload.description,

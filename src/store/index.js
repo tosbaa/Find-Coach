@@ -5,10 +5,15 @@ import request from "./modules/request/index.js";
 export default createStore({
   state() {
     return {
-      userId: "c3"
+      userId: "c5"
     };
   },
   mutations: {},
   actions: {},
+  getters: {
+    userId(state) {
+      return state.userId;
+    }
+  },
   modules: { coaches: coach, requests: request }
 });
