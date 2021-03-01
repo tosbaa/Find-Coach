@@ -9,7 +9,10 @@
         <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
         <base-button link to="/register">Register As Coach</base-button>
       </div>
-      <ul v-if="coachesExist">
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="coachesExist">
         <coach-item
           v-for="coach in filteredCoaches"
           :key="coach.id"
@@ -33,7 +36,8 @@ export default {
   components: { CoachItem, CoachFilter },
   data() {
     return {
-      filters: ["frontend", "backend", "career"]
+      filters: ["frontend", "backend", "career"],
+      isLoading: false
     };
   },
   computed: {
@@ -56,8 +60,10 @@ export default {
     setFilters(filters) {
       this.filters = filters;
     },
-    loadCoaches() {
-      this.$store.dispatch("coaches/loadCoaches");
+    async loadCoaches() {
+      this.isLoading = true;
+      await this.$store.dispatch("coaches/loadCoaches");
+      this.isLoading = false;
     }
   }
 };
