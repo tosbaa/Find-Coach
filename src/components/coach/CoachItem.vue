@@ -12,7 +12,7 @@
       >
     </div>
     <div class="actions">
-      <base-button mode="outline" link to="coachContactLink"
+      <base-button mode="outline" link :to="coachContactLink"
         >Contact</base-button
       >
       <base-button link :to="coachDetailsLink">Details</base-button>
