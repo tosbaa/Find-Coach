@@ -73,17 +73,15 @@ export default {
         return;
       }
       this.isLoading = true;
+      const payload = {
+        email: this.email,
+        password: this.password
+      };
       try {
         if (this.mode === "login") {
-          await this.$store.dispatch("login", {
-            email: this.email,
-            password: this.password
-          });
+          await this.$store.dispatch("login", payload);
         } else {
-          await this.$store.dispatch("signUp", {
-            email: this.email,
-            password: this.password
-          });
+          await this.$store.dispatch("signUp", payload);
         }
         const redirect = this.$route.query.redirect || "coaches";
         this.$router.replace(`/${redirect}`);
