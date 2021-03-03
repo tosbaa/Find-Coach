@@ -4,6 +4,7 @@ import CoachList from "../views/coaches/CoachList.vue";
 import CoachRegister from "../views/coaches/CoachRegister.vue";
 import ContactCoach from "../views/requests/ContactCoach.vue";
 import RequestReceived from "../views/requests/RequestsReceived.vue";
+import UserAuth from "../views/auth/UserAuth.vue";
 import NotFound from "../views/NotFound.vue";
 const routes = [
   {
@@ -32,6 +33,10 @@ const routes = [
   {
     path: "/requests",
     component: RequestReceived
+  },
+  {
+    path: "/auth",
+    component: UserAuth
   },
   {
     path: "/:notFound(.*)",
