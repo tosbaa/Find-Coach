@@ -11,7 +11,13 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
-          <base-button link to="/register">Register As Coach</base-button>
+          <base-button link to="/auth" v-if="!authenticated">Login</base-button>
+          <base-button
+            link
+            to="/register"
+            v-if="!isCoach && !isLoading && authenticated"
+            >Register As Coach</base-button
+          >
         </div>
         <div v-if="isLoading">
           <base-spinner></base-spinner>
@@ -48,7 +54,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      coachesExist: "coaches/hasCoaches"
+      coachesExist: "coaches/hasCoaches",
+      isCoach: "coaches/isCoach",
+      authenticated: "isAuthenticated"
     }),
     filteredCoaches() {
       const coaches = this.$store.getters["coaches/coaches"];

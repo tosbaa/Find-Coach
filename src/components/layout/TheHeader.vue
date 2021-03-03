@@ -6,13 +6,35 @@
         <li>
           <router-link to="/coaches">All Coaches</router-link>
         </li>
-        <li>
+        <li v-if="authenticated">
           <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="authenticated">
+          <base-button @click="logout">Logout</base-button>
         </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters({
+      authenticated: "isAuthenticated"
+    })
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    }
+  }
+};
+</script>
 
 <style scoped>
 header {
