@@ -1,3 +1,4 @@
+let timer;
 export default {
   async login(context, payload) {
     await context.dispatch("auth", {
@@ -29,17 +30,57 @@ export default {
     if (!response.ok) {
       throw new Error("Email Already Exist");
     }
+
+    timer = setTimeout(() =>
+      context.dispatch("autoLogout", responseData.expiresIn)
+    );
+
+    const expirationDate = new Date(
+      new Date().getTime() + responseData.expiresIn * 1000
+    );
+
+    localStorage.setItem("tokenExpiration", expirationDate);
+    localStorage.setItem("token", responseData.idToken);
+    localStorage.setItem("userId", responseData.localId);
     context.commit("setUser", {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn
+      tokenExpiration: expirationDate
     });
   },
+
+  tryLogin(context) {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const tokenExpiration = localStorage.getItem("tokenExpiration");
+    const expiresIn = +tokenExpiration - new Date().getTime();
+    if (expiresIn < 0) {
+      return;
+    }
+    timer = setTimeout(() => context.dispatch("autoLogout"), expiresIn);
+    if (token && userId) {
+      context.commit("setUser", {
+        token: token,
+        userId: userId,
+        tokenExpiration: tokenExpiration
+      });
+    }
+  },
+
   logout(context) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("tokenExpiration");
+    clearTimeout(timer);
     context.commit("setUser", {
       token: null,
       userId: null,
       tokenExpiration: null
     });
+  },
+
+  autoLogout(context) {
+    context.dispatch("logout");
+    context.commit("didLogout");
   }
 };
