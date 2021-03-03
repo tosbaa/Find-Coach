@@ -3,15 +3,15 @@ export default {
     const response = await fetch(
       `${process.env.VUE_APP_AUTH_URL}/accounts:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`,
       {
-        methods: "POST",
-        body: {
+        method: "POST",
+        body: JSON.stringify({
           email: payload.email,
           password: payload.password,
           returnSecureToken: true
-        }
+        })
       }
     );
-    const responseData = response.json();
+    const responseData = await response.json();
 
     if (!response.ok) {
       throw new Error("Email Already Exist");
@@ -34,7 +34,7 @@ export default {
         })
       }
     );
-    const responseData = response.json();
+    const responseData = await response.json();
 
     if (!response.ok) {
       throw new Error("Email Already Exist");
