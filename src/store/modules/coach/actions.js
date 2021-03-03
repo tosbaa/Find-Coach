@@ -1,6 +1,7 @@
 export default {
-  async saveCoach({ commit, rootGetters }, payload) {
-    const userId = rootGetters.userId;
+  async saveCoach(context, payload) {
+    const userId = context.rootGetters.userId;
+    const token = context.rootGetters.token;
     const data = {
       firstName: payload.first,
       lastName: payload.last,
@@ -10,19 +11,19 @@ export default {
     };
 
     const response = await fetch(
-      `${process.env.VUE_APP_BACKEND_URL}/coaches/${userId}.json`,
+      `${process.env.VUE_APP_BACKEND_URL}/coaches/${userId}.json?auth=${token}`,
       {
         method: "PUT",
         body: JSON.stringify(data)
       }
     );
 
-    //onst responseData = await response.json();
+    //const responseData = await response.json();
     if (!response.ok) {
       console.log("Error while saving coach");
     }
 
-    commit("addCoach", {
+    context.commit("addCoach", {
       id: userId,
       ...data
     });
