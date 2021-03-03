@@ -105,11 +105,11 @@ menu {
 }
 
 .dialog-enter-active {
-  transition: all 0.3 ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .dialog-leave-active {
-  transition: all 0.3 ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .dialog-enter-to,
