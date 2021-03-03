@@ -1,5 +1,27 @@
 export default {
-  login() {},
+  async login(context, payload) {
+    const response = await fetch(
+      `${process.env.VUE_APP_AUTH_URL}/accounts:signInWithPassword?key=${process.env.VUE_APP_API_KEY}`,
+      {
+        methods: "POST",
+        body: {
+          email: payload.email,
+          password: payload.password,
+          returnSecureToken: true
+        }
+      }
+    );
+    const responseData = response.json();
+
+    if (!response.ok) {
+      throw new Error("Email Already Exist");
+    }
+    context.commit("setUser", {
+      token: responseData.idToken,
+      userId: responseData.localId,
+      tokenExpiration: responseData.expiresIn
+    });
+  },
   async signUp(context, payload) {
     const response = await fetch(
       `${process.env.VUE_APP_AUTH_URL}/accounts:signUp?key=${process.env.VUE_APP_API_KEY}`,
@@ -15,10 +37,8 @@ export default {
     const responseData = response.json();
 
     if (!response.ok) {
-      console.log(responseData);
-      throw new Error(responseData.message || "Failed to authenticate");
+      throw new Error("Email Already Exist");
     }
-    console.log(responseData);
     context.commit("setUser", {
       token: responseData.idToken,
       userId: responseData.localId,
